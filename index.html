@@ -548,14 +548,15 @@ section{position:relative;z-index:1;}
   background:var(--navy2);
 }
 .contact-layout{
-  display:grid;grid-template-columns:1fr 1.4fr;
-  gap:5rem;align-items:start;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;
+  max-width:900px;
 }
 .contact-map-section{
   margin-top:2rem;
 }
 .map-placeholder{
-  width:100%;height:220px;
+  width:100%;height:320px;
   background:rgba(13,34,68,0.7);
   border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
@@ -608,50 +609,7 @@ section{position:relative;z-index:1;}
 .cd-value a{color:var(--white);text-decoration:none;}
 .cd-value a:hover{color:var(--cyan);}
 
-/* FORM */
-.contact-form{
-  display:flex;flex-direction:column;gap:1rem;
-}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.fg{display:flex;flex-direction:column;gap:0.4rem;}
-.flabel{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:0.65rem;letter-spacing:0.22em;
-  text-transform:uppercase;color:var(--cyan);
-}
-.finput,.fselect,.ftextarea{
-  background:rgba(6,13,27,0.8);
-  border:1px solid var(--border);
-  color:var(--white);
-  padding:0.8rem 1rem;
-  font-family:'Barlow',sans-serif;
-  font-size:0.88rem;
-  font-weight:300;
-  outline:none;
-  transition:border-color 0.3s,background 0.3s;
-  -webkit-appearance:none;
-}
-.finput:focus,.fselect:focus,.ftextarea:focus{
-  border-color:rgba(0,194,232,0.5);
-  background:rgba(0,194,232,0.04);
-}
-.finput::placeholder,.ftextarea::placeholder{color:rgba(238,243,252,0.25);}
-.ftextarea{resize:vertical;}
-.fselect option{background:#060d1b;}
-.fsubmit{
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:0.8rem;
-  letter-spacing:0.22em;text-transform:uppercase;
-  padding:1rem;
-  background:linear-gradient(135deg,var(--cyan2),var(--cyan));
-  color:var(--ink);border:none;cursor:pointer;
-  transition:all 0.3s;
-  box-shadow:0 0 30px rgba(0,194,232,0.25);
-}
-.fsubmit:hover{
-  box-shadow:0 0 50px rgba(0,194,232,0.45);
-  transform:translateY(-2px);
-}
+/* Form CSS removed — static hosting */
 
 /* ─── FOOTER ─── */
 footer{
@@ -694,27 +652,189 @@ footer{
 .stagger .reveal:nth-child(5){transition-delay:0.45s;}
 .stagger .reveal:nth-child(6){transition-delay:0.55s;}
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:1100px){
-  nav{padding:0 2rem;}
-  .section-pad{padding:5rem 2rem;}
-  .hero-content{padding:0 2rem 6rem;}
-  .hero-badges{right:2rem;bottom:6rem;}
-  #marcas{padding:3rem 2rem;}
-  footer{padding:2rem;}
+/* ─── HAMBURGER MENU ─── */
+.hamburger{
+  display:none;
+  flex-direction:column;justify-content:center;
+  gap:5px;width:40px;height:40px;
+  background:none;border:1px solid var(--border);cursor:pointer;
+  padding:6px;flex-shrink:0;z-index:300;
 }
-@media(max-width:860px){
-  .nav-links,.nav-btn{display:none;}
-  .services-grid{grid-template-columns:1fr;}
+.hamburger span{
+  display:block;width:100%;height:2px;
+  background:var(--white70);border-radius:2px;
+  transition:all 0.35s cubic-bezier(.4,0,.2,1);
+  transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  position:fixed;
+  top:68px;left:0;right:0;
+  height:calc(100dvh - 68px);
+  z-index:250;
+  background:rgba(3,8,15,0.98);
+  backdrop-filter:blur(20px);
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  padding:0.5rem 0;
+  overflow-y:auto;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-8px);
+  transition:opacity 0.3s ease, transform 0.3s ease;
+}
+.mobile-nav.open{
+  opacity:1;
+  pointer-events:all;
+  transform:translateY(0);
+}
+.mobile-nav a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:1.15rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--white70);text-decoration:none;
+  padding:0.85rem 2rem;width:100%;text-align:center;
+  border-bottom:1px solid var(--border);
+  transition:color 0.3s,background 0.3s;
+  flex-shrink:0;
+}
+.mobile-nav a:first-child{border-top:1px solid var(--border);}
+.mobile-nav a:hover,.mobile-nav a:active{color:var(--cyan);background:rgba(0,194,232,0.06);}
+.mobile-nav .mob-cta{
+  margin-top:1rem;border:none!important;
+  background:linear-gradient(135deg,var(--cyan2),var(--cyan));
+  color:var(--ink)!important;font-weight:700;
+  flex-shrink:0;
+}
+
+/* ═══════════════════════════════
+   MOBILE FIRST — breakpoints up
+═══════════════════════════════ */
+
+/* ── XS < 480px ── */
+@media(max-width:479px){
+  nav{padding:0 1rem;}
+  .logo-text{font-size:0.82rem;}
+  .logo-sub{display:none;}
+  .section-pad{padding:3.2rem 1.1rem;}
+  .hero{min-height:100svh;}
+  .hero-content{padding:0 1.1rem 3.5rem;max-width:100%;}
+  .hero-h1{font-size:2.2rem;letter-spacing:-0.01em;}
+  .hero-tagline{font-size:0.9rem;margin-bottom:2rem;}
+  .hero-actions{flex-direction:column;gap:0.7rem;}
+  .btn-primary,.btn-outline{text-align:center;padding:0.9rem 1.5rem;width:100%;}
+  .hero-badges{display:none;}
+  .photo-content{padding:0 1.1rem;}
+  .photo-section{height:50vh;min-height:300px;}
+  .section-h2{font-size:1.75rem;}
+  .services-intro{margin-bottom:2.5rem;}
+  .services-grid{grid-template-columns:1fr;border:none;background:transparent;gap:0;}
+  .srv{border:1px solid var(--border);border-bottom:none;padding:2rem 1.4rem;}
+  .srv:first-child{border-top:1px solid var(--border);}
+  .srv:last-child{border-bottom:1px solid var(--border);}
   .srv:nth-child(3n){border-right:1px solid var(--border);}
-  .srv:nth-child(4),.srv:nth-child(5),.srv:nth-child(6){border-bottom:1px solid var(--border);}
-  .srv:last-child{border-bottom:none;}
+  .cov-layout,.rep-layout,.contact-layout{grid-template-columns:1fr;gap:2.5rem;}
+  .cov-visual{order:-1;}
+  .cov-label{bottom:-0.8rem;left:0;}
+  .rep-pillars{grid-template-columns:1fr;gap:0.8rem;}
+  .rep-img-wrap::before{display:none;}
+  .form-row{grid-template-columns:1fr;}
+  #marcas{padding:3rem 1.1rem;}
+  .brands-wrap{gap:0.5rem;}
+  .brand{font-size:0.78rem;padding:0.4rem 0.8rem;}
+  footer{padding:2rem 1.1rem;}
+  .footer-inner{flex-direction:column;align-items:center;text-align:center;gap:1rem;}
+  .footer-right{text-align:center;}
+  .ticker-item{font-size:0.62rem;padding:0 1.2rem;}
+}
+
+/* ── SM 480–639px ── */
+@media(min-width:480px) and (max-width:639px){
+  nav{padding:0 1.4rem;}
+  .logo-sub{display:none;}
+  .section-pad{padding:4rem 1.5rem;}
+  .hero-content{padding:0 1.5rem 4.5rem;max-width:100%;}
+  .hero-h1{font-size:2.7rem;}
+  .hero-tagline{margin-bottom:2rem;}
+  .hero-actions{flex-direction:column;gap:0.7rem;}
+  .btn-primary,.btn-outline{text-align:center;padding:0.9rem 1.5rem;width:100%;}
+  .hero-badges{display:none;}
+  .photo-content{padding:0 1.5rem;}
+  .photo-section{height:55vh;min-height:340px;}
+  .section-h2{font-size:2rem;}
+  .services-grid{grid-template-columns:1fr;border:none;background:transparent;gap:0;}
+  .srv{border:1px solid var(--border);border-bottom:none;padding:2rem 1.6rem;}
+  .srv:first-child{border-top:1px solid var(--border);}
+  .srv:last-child{border-bottom:1px solid var(--border);}
+  .srv:nth-child(3n){border-right:1px solid var(--border);}
   .cov-layout,.rep-layout,.contact-layout{grid-template-columns:1fr;gap:3rem;}
   .cov-visual{order:-1;}
-  .hero-badges{display:none;}
+  .rep-pillars{grid-template-columns:1fr 1fr;}
   .form-row{grid-template-columns:1fr;}
-  .footer-inner{flex-direction:column;text-align:center;}
+  #marcas{padding:3rem 1.5rem;}
+  footer{padding:2rem 1.5rem;}
+  .footer-inner{flex-direction:column;align-items:center;text-align:center;}
   .footer-right{text-align:center;}
+}
+
+/* ── MD 640–899px ── */
+@media(min-width:640px) and (max-width:899px){
+  nav{padding:0 2rem;}
+  .logo-sub{display:none;}
+  .section-pad{padding:5rem 2.5rem;}
+  .hero-content{padding:0 2.5rem 5.5rem;}
+  .hero-h1{font-size:3.2rem;}
+  .hero-badges{display:none;}
+  .photo-content{padding:0 2.5rem;}
+  .photo-section{height:60vh;}
+  .services-grid{
+    grid-template-columns:1fr 1fr;
+    border:1px solid var(--border);
+  }
+  .srv:nth-child(2n){border-right:none;}
+  .srv:nth-child(n+5){border-bottom:none;}
+  .srv:nth-child(3n){border-right:1px solid var(--border);}
+  .srv:nth-child(2n){border-right:none;}
+  .srv:nth-child(5),.srv:nth-child(6){border-bottom:none;}
+  .cov-layout,.rep-layout,.contact-layout{grid-template-columns:1fr;gap:3rem;}
+  .cov-visual{order:-1;}
+  .rep-pillars{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr 1fr;}
+  #marcas{padding:3.5rem 2.5rem;}
+  footer{padding:2rem 2.5rem;}
+  .footer-inner{flex-direction:column;align-items:center;text-align:center;}
+  .footer-right{text-align:center;}
+}
+
+/* ── LG 900–1099px ── */
+@media(min-width:900px) and (max-width:1099px){
+  nav{padding:0 2.5rem;}
+  .section-pad{padding:6rem 3rem;}
+  .hero-content{padding:0 3rem 6rem;}
+  .hero-badges{right:3rem;bottom:6rem;}
+  .photo-content{padding:0 3rem;}
+  .cov-layout{grid-template-columns:1fr 1fr;gap:3.5rem;}
+  .rep-layout{grid-template-columns:4fr 6fr;gap:3.5rem;}
+  .contact-layout{grid-template-columns:1fr 1fr;gap:3.5rem;}
+  #marcas{padding:4rem 3rem;}
+  footer{padding:2rem 3rem;}
+}
+
+/* ── XL ≥ 1100px — full desktop ── */
+@media(min-width:1100px){
+  .hamburger{display:none!important;}
+  .mobile-nav{display:none!important;}
+}
+
+/* Show hamburger on everything below desktop */
+@media(max-width:1099px){
+  .nav-links,.nav-btn{display:none;}
+  .hamburger{display:flex;}
 }
 </style>
 </head>
@@ -744,6 +864,19 @@ footer{
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="#contacto" class="nav-btn">Solicitar Presupuesto</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <a href="#servicios" class="mob-link">Servicios</a>
+  <a href="#cobertura" class="mob-link">Cobertura</a>
+  <a href="#reparacion" class="mob-link">Mantenimiento</a>
+  <a href="#marcas" class="mob-link">Marcas</a>
+  <a href="#contacto" class="mob-link">Contacto</a>
+  <a href="#contacto" class="mob-link mob-cta">Solicitar Presupuesto</a>
 </nav>
 
 <!-- HERO -->
@@ -1071,7 +1204,7 @@ footer{
     <div class="eyebrow">Estamos en Vigo</div>
     <h2 class="section-h2">Hable con <em>nuestros técnicos</em></h2>
     <div class="rule" style="margin:0 auto 1.5rem;background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
-    <p class="section-p" style="margin:0 auto;text-align:center;">¿Necesita un presupuesto, tiene un equipo averiado o quiere ampliar su red? Contáctenos hoy mismo.</p>
+    <p class="section-p" style="margin:0 auto;text-align:center;">Llámenos, escríbanos o visítenos en Vigo. Estaremos encantados de atenderle y estudiar su caso.</p>
   </div>
 
   <div class="contact-layout">
@@ -1136,50 +1269,7 @@ footer{
       </div>
     </div>
 
-    <div class="contact-form reveal">
-      <div class="form-row">
-        <div class="fg">
-          <label class="flabel">Nombre</label>
-          <input type="text" class="finput" placeholder="Su nombre completo">
-        </div>
-        <div class="fg">
-          <label class="flabel">Empresa</label>
-          <input type="text" class="finput" placeholder="Nombre de la empresa">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="fg">
-          <label class="flabel">Teléfono</label>
-          <input type="tel" class="finput" placeholder="Número de contacto">
-        </div>
-        <div class="fg">
-          <label class="flabel">Email</label>
-          <input type="email" class="finput" placeholder="correo@empresa.com">
-        </div>
-      </div>
-      <div class="fg">
-        <label class="flabel">Servicio de interés</label>
-        <select class="fselect">
-          <option value="">Seleccione un servicio</option>
-          <option>PMR / DMR Digital</option>
-          <option>Broadcast FM / TDT</option>
-          <option>Radioafición</option>
-          <option>Redes Wi-Fi / WiMAX</option>
-          <option>Reparación y Mantenimiento</option>
-          <option>Instalación Profesional</option>
-          <option>Cobertura / Conectividad</option>
-          <option>Otro</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label class="flabel">Mensaje</label>
-        <textarea class="ftextarea" rows="5" placeholder="Describa su necesidad o consulta..."></textarea>
-      </div>
-      <button class="fsubmit">Enviar Consulta →</button>
-      <p style="font-size:0.75rem;color:var(--white40);line-height:1.5;">
-        Sus datos serán tratados conforme a nuestra política de privacidad y nunca serán cedidos a terceros.
-      </p>
-    </div>
+
   </div>
 </section>
 
@@ -1199,25 +1289,52 @@ footer{
 </footer>
 
 <script>
+// ── Scroll reveal ──
 const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) e.target.classList.add('on');
-  });
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
 }, {threshold: 0.1});
-
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-// Nav active link highlight on scroll
+// ── Nav active highlight ──
 const secs = document.querySelectorAll('section[id]');
 const links = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
   let cur = '';
-  secs.forEach(s => {
-    if(window.scrollY >= s.offsetTop - 120) cur = s.id;
-  });
+  secs.forEach(s => { if(window.scrollY >= s.offsetTop - 120) cur = s.id; });
   links.forEach(a => {
     a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--cyan)' : '';
   });
+}, {passive:true});
+
+// ── Hamburger menu ──
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+let isOpen = false;
+
+function toggleMenu(open) {
+  isOpen = open;
+  hamburger.classList.toggle('open', open);
+  mobileNav.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', open);
+  mobileNav.setAttribute('aria-hidden', !open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+hamburger.addEventListener('click', () => toggleMenu(!isOpen));
+
+// Close on link click
+document.querySelectorAll('.mob-link').forEach(a => {
+  a.addEventListener('click', () => toggleMenu(false));
+});
+
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && isOpen) toggleMenu(false);
+});
+
+// Close on outside tap (backdrop)
+mobileNav.addEventListener('click', e => {
+  if(e.target === mobileNav) toggleMenu(false);
 });
 </script>
 </body>
